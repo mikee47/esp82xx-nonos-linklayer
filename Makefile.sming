@@ -9,7 +9,6 @@ all: install
 
 %:
 	@make -f makefiles/Makefile.build-lwip2 \
-			SDK=$(ESP_HOME)/sdk \
 			LWIP_LIB=liblwip2.a \
 			LWIP_LIB_RELEASE=$(LWIP_LIB_RELEASE) \
 			LWIP_INCLUDES_RELEASE=$(LWIP_INCLUDES_RELEASE) \

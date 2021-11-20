@@ -18,8 +18,7 @@
 
 #include <time.h>
 #include <sys/reent.h>
-#include "sntp.h"
-
+#include <arch/cc.h>
 
 #ifndef _TIMEVAL_DEFINED
 #define _TIMEVAL_DEFINED
@@ -101,8 +100,9 @@ int gettimeofday(struct timeval *tp, void *tzp)
     if (tp)
     {
         ensureBootTimeIsSet();
-        tp->tv_sec  = s_bootTime + millis() / 1000;
-        tp->tv_usec = micros() * 1000;
+        uint32_t micros = system_get_time();
+        tp->tv_sec  = s_bootTime + micros / 1000;
+        tp->tv_usec = micros % 1000;
     }
     return 0;
 }

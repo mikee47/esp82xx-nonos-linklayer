@@ -11,7 +11,7 @@ static sint8 time_zone = 8;
 static bool sntp_time_flag = false;
 static uint32 sntp_update_delay = SNTP_UPDATE_DELAY;
 static uint8 sntp_receive_time_size = 1;
-LOCAL os_timer_t sntp_timer;
+static os_timer_t sntp_timer;
 
 /*****************************************/
 #define SECSPERMIN	60L

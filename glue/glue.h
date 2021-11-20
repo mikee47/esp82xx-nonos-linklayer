@@ -34,7 +34,6 @@ author: d. gauchard
 #include "ets_sys.h"
 #include "osapi.h"
 #include "user_interface.h"
-#include "esp-missing.h"
 
 #define UDEBUG	0	// 0 or 1
 #define UDUMP	0	// 0 or 1 (show packets content)

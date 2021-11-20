@@ -15,8 +15,8 @@
 #include "net80211/ieee80211_var.h"
 #endif
 
-#include "user_interface.h"
-#include "mem.h"
+#include <esp_wifi.h>
+#include <sdk/mem.h>
 
 #include "glue.h"
 #include "lwip-helper.h"

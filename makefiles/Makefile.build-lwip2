@@ -14,24 +14,25 @@ IRAM	+= sys_timeout_LWIP2
 IRAM	+= sntp_time_inc sntp_get_current_timestamp
 ####################################
 
+LWIP_LIB_BUILD = $(BUILD)/$(LWIP_LIB)
+
 all: $(LWIP_LIB_RELEASE)
 
-$(LWIP_LIB_RELEASE): $(LWIP_LIB)
+$(LWIP_LIB_RELEASE): $(LWIP_LIB_BUILD)
 	@# according to eagle.app.v6.common.ld:
 	@# putting symbols into .gnu.linkonce.literal.* instead of (default:).text.*
 	@# will eventually move them in iram: section .text.* instead of .irom0.text.*
 	@# check this with xtensa-lx106-elf-objdump -t <elfresult> | grep <symbol>
-	@( [ ! -r $(LWIP_LIB_RELEASE) ] || [ $(LWIP_LIB) -nt $(LWIP_LIB_RELEASE) ] ) && cp $(LWIP_LIB) $(LWIP_LIB_RELEASE) && for i in $(IRAM); do \
+	@( [ ! -r $@ ] || [ $< -nt $@ ] ) && cp $< $@ && for i in $(IRAM); do \
 		echo "---- moving $$i in IRAM"; \
-		$(OC) --rename-section .text.$$i=.gnu.linkonce.literal.$$i $(LWIP_LIB_RELEASE); \
+		$(OC) --rename-section .text.$$i=.gnu.linkonce.literal.$$i $@; \
 		true; \
 	done || true
 
-.PHONY: $(LWIP_LIB)
-$(LWIP_LIB):
-	make -f makefiles/Makefile.glue-esp
-	make -f makefiles/Makefile.glue
-	make -C lwip2-src/src -f ../../makefiles/Makefile.lwip2 BUILD=../../$(BUILD) LWIP_LIB=../../$(LWIP_LIB)
+$(LWIP_LIB_BUILD):
+	make -f makefiles/Makefile.glue-esp LWIP_LIB=$@
+	make -f makefiles/Makefile.glue LWIP_LIB=$@
+	make -C lwip2-src/src -f ../../makefiles/Makefile.lwip2 LWIP_LIB=$@
 
 section-show:
 	@for i in $(IRAM); do \
@@ -53,4 +54,4 @@ install: $(LWIP_LIB_RELEASE)
 	touch $(LWIP_INCLUDES_RELEASE)/espconn.h
 
 clean:
-	rm -rf build $(LWIP_LIB)
+	rm -rf $(BUILD)

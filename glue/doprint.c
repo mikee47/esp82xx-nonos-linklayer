@@ -31,11 +31,10 @@ author: d. gauchard
 #include <stdarg.h>
 #include <osapi.h>
 #include <stdint.h>
-#include <mem.h>
+#include <sdk/mem.h>
 #include <ets_sys.h>
 
 #include "doprint.h"
-#include "esp-missing.h"
 
 extern int doprint_allow;
 

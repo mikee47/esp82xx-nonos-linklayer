@@ -5,7 +5,7 @@ $(BUILD)/%.h:
 
 $(BUILD)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(BUILD_FLAGS) $(BUILD_DEFINES) $(BUILD_INCLUDES) $< -o $@
+	@$(CC) $(BUILD_FLAGS) $(BUILD_DEFINES) $(BUILD_INCLUDES) $< -o $@
 
 $(LWIP_LIB): $(BUILD)/user_config.h $(OBJ)
-	$(AR) cru $@ $(OBJ)
+	@$(AR) cru $@ $(OBJ)

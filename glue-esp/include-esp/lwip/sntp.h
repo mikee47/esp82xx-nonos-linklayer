@@ -8,8 +8,6 @@
 extern "C" {
 #endif
 
-typedef long     time_t;
-
 /** The maximum number of SNTP servers that can be set */
 #ifndef SNTP_MAX_SERVERS
 #define SNTP_MAX_SERVERS           3

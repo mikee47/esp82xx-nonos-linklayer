@@ -232,10 +232,14 @@ u8_t ip4_addr_netmask_valid(u32_t netmask)ICACHE_FLASH_ATTR;
 #define ip_ntoa(ipaddr)  ipaddr_ntoa(ipaddr)
 
 u32_t ipaddr_addr(const char *cp)ICACHE_FLASH_ATTR;
-int ipaddr_aton(const char *cp, ip_addr_t *addr)ICACHE_FLASH_ATTR;
+int ip4addr_aton(const char *cp, ip_addr_t *addr)ICACHE_FLASH_ATTR;
 /** returns ptr to static buffer; not reentrant! */
-char *ipaddr_ntoa(const ip_addr_t *addr)ICACHE_FLASH_ATTR;
-char *ipaddr_ntoa_r(const ip_addr_t *addr, char *buf, int buflen)ICACHE_FLASH_ATTR;
+char *ip4addr_ntoa(const ip_addr_t *addr)ICACHE_FLASH_ATTR;
+char *ip4addr_ntoa_r(const ip_addr_t *addr, char *buf, int buflen)ICACHE_FLASH_ATTR;
+
+#define ipaddr_aton(CP, ADDR) ip4addr_aton(CP,ADDR);
+#define ipaddr_ntoa(ADDR) ip4addr_ntoa(ADDR)
+#define ipaddr_ntoa_r(ADDR, CP, LEN) ip4addr_ntoa_r(ADDR, CP, LEN)
 
 #define IP2STR(ipaddr) ip4_addr1_16(ipaddr), \
     ip4_addr2_16(ipaddr), \

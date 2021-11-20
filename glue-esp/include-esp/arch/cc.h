@@ -34,7 +34,7 @@
 #ifndef __ARCH_CC_H__
 #define __ARCH_CC_H__
 
-//#include <string.h>
+#include "sdk/mem.h"
 #include "c_types.h"
 #include "ets_sys.h"
 #include "osapi.h"
@@ -59,6 +59,7 @@ typedef signed     short   s16_t;
 typedef unsigned   long    u32_t;
 typedef signed     long    s32_t;
 typedef unsigned long   mem_ptr_t;
+typedef signed short        sint16_t;
 
 #define S16_F "d"
 #define U16_F "d"

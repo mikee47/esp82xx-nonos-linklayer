@@ -34,6 +34,8 @@ author: d. gauchard
 
 #include "stdint.h"
 
+typedef signed short        sint16_t;
+
 #ifdef LWIP_BUILD
 
 // define LWIP_BUILD only when building LWIP
@@ -41,18 +43,17 @@ author: d. gauchard
 // with standard headers like atoi()
 #include "ets_sys.h"
 #include "osapi.h"
-#include "esp-missing.h"
 
 void sntp_set_system_time (uint32_t t);
 
 #endif // defined(LWIP_BUILD)
 
-#include "mem.h" // useful for os_malloc used in esp-arduino's mDNS
+#include "sdk/mem.h" // useful for os_malloc used in esp-arduino's mDNS
 
 typedef int sys_prot_t;	// not really used
 #define SYS_ARCH_DECL_PROTECT(lev)
-#define SYS_ARCH_PROTECT(lev) os_intr_lock()
-#define SYS_ARCH_UNPROTECT(lev) os_intr_unlock()
+#define SYS_ARCH_PROTECT(lev) ets_intr_lock()
+#define SYS_ARCH_UNPROTECT(lev) ets_intr_unlock()
 
 ///////////////////////////////
 //// DEBUG
@@ -75,6 +76,9 @@ extern int os_printf_plus(const char * format, ...) __attribute__ ((format (prin
 ///////////////////////////////
 //// MISSING 
 
+extern uint32_t millis(void);
+extern uint32_t system_get_time(void);
+extern int r_rand(void);
 #define sys_now millis		// arduino wire millis() definition returns 32 bits like sys_now() does
 #define LWIP_RAND r_rand	// old lwip uses this useful undocumented function
 #define IPSTR "%d.%d.%d.%d"
