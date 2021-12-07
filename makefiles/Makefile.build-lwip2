@@ -15,6 +15,10 @@ IRAM	+= sntp_time_inc sntp_get_current_timestamp
 ####################################
 
 LWIP_LIB_BUILD = $(BUILD)/$(LWIP_LIB)
+LWIP_LIB_GLUE = $(BUILD)/glue.a
+LWIP_LIB_GLUE_ESP = $(BUILD)/glue-esp.a
+LWIP_LIB_SRC = $(BUILD)/src.a
+LWIP_MERGE_AS = $(BUILD)/merge.as
 
 all: $(LWIP_LIB_RELEASE)
 
@@ -29,10 +33,25 @@ $(LWIP_LIB_RELEASE): $(LWIP_LIB_BUILD)
 		true; \
 	done || true
 
-$(LWIP_LIB_BUILD):
-	make -f makefiles/Makefile.glue-esp LWIP_LIB=$@
-	make -f makefiles/Makefile.glue LWIP_LIB=$@
-	make -C lwip2-src/src -f ../../makefiles/Makefile.lwip2 LWIP_LIB=$@
+$(LWIP_LIB_BUILD): $(LWIP_LIB_SRC) $(LWIP_LIB_GLUE) $(LWIP_LIB_GLUE_ESP) $(LWIP_MERGE_AS)
+	@cd $(BUILD) && $(AR) -M < $(LWIP_MERGE_AS)
+
+$(LWIP_LIB_GLUE):
+	@$(MAKE) -f makefiles/Makefile.glue LWIP_LIB=$@
+
+$(LWIP_LIB_GLUE_ESP):
+	@$(MAKE) -f makefiles/Makefile.glue-esp LWIP_LIB=$@
+
+$(LWIP_LIB_SRC):
+	@$(MAKE) -C lwip2-src/src -f ../../makefiles/Makefile.lwip2 LWIP_LIB=$@
+
+$(LWIP_MERGE_AS):
+	@echo "CREATE $(LWIP_LIB)" > $@
+	@echo "ADDLIB src.a" >> $@
+	@echo "ADDLIB glue.a" >> $@
+	@echo "ADDLIB glue-esp.a" >> $@
+	@echo "SAVE" >> $@
+	@echo "END" >> $@
 
 section-show:
 	@for i in $(IRAM); do \

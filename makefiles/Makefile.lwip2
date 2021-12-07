@@ -1,13 +1,15 @@
 
 # this one is executed from directory lwip2-src/src/
 
-OBJ = \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard netif/ethernet.c)) \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard core/*.c)) \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard core/ipv4/*.c)) \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard core/ipv6/*.c)) \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard api/*.c)) \
-	$(patsubst %.c,$(BUILD)/%.o,$(wildcard apps/sntp/*.c)) \
+SOURCES = \
+	netif/ethernet.c \
+	core/*.c \
+	core/ipv4/*.c \
+	core/ipv6/*.c \
+	api/*.c \
+	apps/sntp/*.c
+
+OBJ = $(patsubst %.c,$(BUILD)/%.o,$(wildcard $(SOURCES)))
 
 BUILD_INCLUDES = -I$(BUILD) -I$(SDK)/include -Iinclude -I../../glue -I../../glue-lwip
 
@@ -21,10 +23,4 @@ hash: ../../glue-lwip/lwip-git-hash.h
 include ../../makefiles/Makefile.defs
 include ../../makefiles/Makefile.rules
 
--include $(BUILD)/netif/*.d
--include $(BUILD)/core/*.d
--include $(BUILD)/core/ipv4/*.d
--include $(BUILD)/core/ipv6/*.d
--include $(BUILD)/api/*.d
--include $(BUILD)/apps/sntp/*.d
-
+-include $(BUILD)/$(SOURCES:.c=.d)

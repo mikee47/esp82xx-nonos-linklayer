@@ -8,7 +8,7 @@ LWIP_INCLUDES_RELEASE=include
 all: install
 
 %:
-	@make -f makefiles/Makefile.build-lwip2 \
+	@$(MAKE) -f makefiles/Makefile.build-lwip2 \
 			LWIP_LIB=liblwip2.a \
 			LWIP_LIB_RELEASE=$(LWIP_LIB_RELEASE) \
 			LWIP_INCLUDES_RELEASE=$(LWIP_INCLUDES_RELEASE) \
