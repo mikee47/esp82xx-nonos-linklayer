@@ -36,6 +36,16 @@ author: d. gauchard
 
 typedef signed short        sint16_t;
 
+#define X8_F  "02x"
+
+#define S16_F "d"
+#define U16_F "d"
+#define X16_F "x"
+
+#define S32_F "d"
+#define U32_F "d"
+#define X32_F "x"
+
 #ifdef LWIP_BUILD
 
 // define LWIP_BUILD only when building LWIP
