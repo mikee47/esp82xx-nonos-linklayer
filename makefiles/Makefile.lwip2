@@ -13,7 +13,7 @@ OBJ = \
 #	$(subst ../../lwip2-contrib-src/,contrib/, \
 #		$(patsubst %.c,$(BUILD)/%.o,$(wildcard ../../lwip2-contrib-src/apps/ping/*.c)))
 
-BUILD_INCLUDES = -I$(BUILD) -I$(SDK)/include -Iinclude -I../../glue -I../../glue-lwip -I../../glue-lwip/$(target)
+BUILD_INCLUDES = -I$(BUILD) $(CFLAGS_EXTRA) -Iinclude -I../../glue -I../../glue-lwip -I../../glue-lwip/$(target)
 #BUILD_INCLUDES += -I../../lwip2-contrib-src/apps/ping
 
 all: $(LWIP_LIB)
