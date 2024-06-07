@@ -55,7 +55,6 @@ extern "C"
 #include <lwip/ip_addr.h>   // formerly official struct ip_info, disappeared in lwIP-v2
 #endif
 
-struct ip_info;
 #include "ets_sys.h"
 #include "osapi.h"
 #include "user_interface.h"

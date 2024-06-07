@@ -58,6 +58,16 @@ extern void (*phy_capture) (int netif_idx, const char* data, size_t len, int out
 
 #include <osapi.h> // os_printf* definitions + ICACHE_RODATA_ATTR
 
+#if 0
+// os_printf() does not understand ("%hhx",0x12345678) => "78") and prints 'h' instead
+// now hacking/using ::printf() from updated and patched esp-quick-toolchain-by-Earle
+#include <stdio.h>
+#undef os_printf
+#undef os_printf_plus
+#define os_printf printf
+#define os_printf_plus printf
+#endif
+
 #if UDEBUG
 #define uprint(x...)		do { os_printf(x); } while (0)
 #else
